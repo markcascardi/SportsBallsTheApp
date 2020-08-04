@@ -1,0 +1,22 @@
+rails new SportsBallsTheApp --database=postgresql --api
+
+rails g model sports name:string gender:string
+rails g model seasons name:string
+rails g model teams sport_id:integer season_id:integer
+rails g model athletes team_id:integer firstname:string lastname:string birthdate:date number:string year:string height:string weight:integer city:string state:string high_school:string ig_handle:string biography:text image_url:string
+
+rails db:create && rails db:migrate
+
+athlete
+  belongs_to :team
+
+team
+  belongs_to :season
+  belongs_to :sport
+  has_many :athletes
+
+sport
+  has_many :teams
+
+season
+  has_many :teams
