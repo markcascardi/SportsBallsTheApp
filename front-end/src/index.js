@@ -22,14 +22,25 @@ function getRoster(teamSelected) {
     rosterList = ""
     roster.athletes.forEach(athlete => {
       rosterList += `
-        <div id="${athlete.id}">
-          <p>
-            #${athlete.number} | ${athlete.firstname} ${athlete.lastname} | ${athlete.city}, ${athlete.state}
-          </p>
-        </div>
+          <tr id="${athlete.id}">
+            <td>${athlete.number}</td>
+            <td>${athlete.firstname} ${athlete.lastname}</td>
+            <td>${athlete.city}</td>
+            <td>${athlete.state}</td>
+          </tr>
       `
     })
-    teamDiv.innerHTML = rosterList
+    teamDiv.innerHTML = `
+      <table text-align="left">
+        <tr>
+          <th>Number</th>
+          <th>Name</th>
+          <th>Home town</th>
+          <th>Home state</th>
+        </tr>
+        ${rosterList}
+      </table>
+    `
   })
 }
 

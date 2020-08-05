@@ -20,3 +20,10 @@ sport
 
 season
   has_many :teams
+
+-scraper
+-table for list view
+-build player card
+-styling
+-add object oriented
+-add sport selector to html home page
