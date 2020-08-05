@@ -4,6 +4,6 @@ class Team < ApplicationRecord
   has_many :athletes
 
   def to_s
-    ("#{season} #{sport}").split("> ").last
+    "#{season} #{sport}"
   end
 end
