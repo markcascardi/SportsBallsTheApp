@@ -10,6 +10,116 @@ td, th {
   padding: 8px;
 }
 
-tr:nth-child(even) {
+thead tr {
+  background-color: white;
+}
+
+tbody tr:nth-child(odd) {
   background-color: #dddddd;
+}
+
+h2, p {
+    font-size: 16px;
+}
+
+h2 {
+    color: #dddd;
+}
+
+p {
+    color: #243B53;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Lato:300,700');
+
+h2, p {
+    font-family: 'Lato', serif;
+    font-size: 16px;
+}
+
+h2 {
+    color: #4B9CD3;
+}
+
+p {
+    color: #243B53;
+}
+
+.card {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border-radius: 5px;
+    border-top: solid 4px #ddd;
+    height: 600px;
+    margin: 0 auto;
+    position: relative;
+    width: 580px;
+}
+
+.background {
+    background-image: url('https://ehutt.web.unc.edu/files/2019/07/argyle-e1562268470982.png');
+    background-size: contain;
+    background-position: center;
+    height: 136px;
+}
+
+.content {
+    padding-top:12px;
+    padding-left: 21px;
+    padding-right: 21px;
+}
+
+.profile {
+    position: absolute;
+    top: 78.5px;
+    left: 20px;
+}
+
+.profile img {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border-radius: 50%;
+    height: 115px;
+}
+
+.header {
+    text-transform: capitalize;
+    max-width: 190px;
+    width: 35%;
+    margin: 0 auto;
+}
+
+.header .name {
+    margin: 0px;
+}
+
+.header .location {
+    margin-top: 7px;
+    margin-bottom: 0px;
+}
+
+.info {
+    margin-top: 21px;
+}
+
+.labels {
+    display: flex;
+    margin-top: 30px;
+}
+
+.labels .label {
+    flex-grow: 1;
+    word-wrap: break-word;
+    width: 0;
+}
+
+.labels .label p {
+    margin-bottom: 5px;
+    margin-top: 0px;
+}
+
+.labels .label h2 {
+    margin: 0px;
+}
+
+textarea {
+  max-width: 92%;
 }
