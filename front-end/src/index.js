@@ -23,26 +23,21 @@ function getRoster(teamSelected) {
   .then(roster => {
     rosterList = ""
     renderRoster(roster)
-    var elems = document.querySelectorAll('.collapsible');
-    var instances = M.Collapsible.init(elems, {});
 })
 
 function renderRoster(roster) {
   roster.athletes.forEach(athlete => {
     rosterList += `
-        <tr id="${athlete.id}" class="athlete-details collapsible-header">
+        <tr id="${athlete.id}" class="athlete-details">
           <td>${athlete.number}</td>
           <td class="athlete-name" data-athlete=${athlete.id}>${athlete.firstname} ${athlete.lastname}</td>
           <td>${athlete.year}</td>
           <td>${athlete.city}, ${athlete.state}</td>
         </tr>
-        <tr class="collapsible-body">
-          <td colspan="4" id="playercard-${athlete.id}"></td>
-        </tr>
     `
   })
   teamDiv.innerHTML = `
-    <table id="athleteList" class="collapsible">
+    <table id="athleteList">
       <thead>
         <tr>
           <th>Number</th>
@@ -60,7 +55,7 @@ function renderRoster(roster) {
 }
 
 function makeAthleteCard(athlete) {
-  const athleteRow = document.getElementById(`playercard-${athlete.id}`)
+  const athleteRow = document.getElementById(athlete.id)
   let athleteCard = document.createElement('div')
   athleteCard.innerHTML = athleteCardHtml(athlete)
   return athleteRow.appendChild(athleteCard)
@@ -94,8 +89,8 @@ function createNote(e) {
 teamDiv.addEventListener("click", (e) => {
   if (e.target.className == "athlete-name")
     getPlayerCard(e)
-    // let noteField = document.getElementById("add-note")
-    // noteField.addEventListener("click", createNote(e))
+    let noteField = document.getElementById("add-note")
+    noteField.addEventListener("click", createNote(e))
 })
 
 let athleteCardHtml = ((athlete) => {
