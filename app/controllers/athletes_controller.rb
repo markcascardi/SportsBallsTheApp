@@ -20,6 +20,6 @@ class AthletesController < ApplicationController
   def athlete_params
     params.require(:athlete).permit(:team_id, :firstname, :lastname, :birthdate,
                    :number, :year, :height, :weight, :city, :state, :high_school,
-                   :ig_handle, :biography, :image_url)
+                   :ig_handle, :biography, :image_url, :comments)
   end
 end

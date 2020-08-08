@@ -30,7 +30,9 @@ function renderRoster(roster) {
     rosterList += `
         <tr id="${athlete.id}" class="athlete-details">
           <td>${athlete.number}</td>
-          <td class="athlete-name" data-athlete=${athlete.id}>${athlete.firstname} ${athlete.lastname}</td>
+          <td class="athlete-name">
+            <a data-athlete="${athlete.id}" class="modal-trigger" href="#modal${athlete.id}">${athlete.firstname} ${athlete.lastname}</a>
+          </td>
           <td>${athlete.year}</td>
           <td>${athlete.city}, ${athlete.state}</td>
         </tr>
@@ -54,20 +56,25 @@ function renderRoster(roster) {
   }
 }
 
-function makeAthleteCard(athlete) {
-  const athleteRow = document.getElementById(athlete.id)
-  let athleteCard = document.createElement('div')
-  athleteCard.innerHTML = athleteCardHtml(athlete)
-  return athleteRow.appendChild(athleteCard)
-}
-
 function getPlayerCard(e) {
+  console.log(e.target.dataset.athlete)
   let athleteSelected = e.target.dataset.athlete
   fetch("http://localhost:3000/athletes/" + athleteSelected)
   .then(response => response.json())
   .then(athlete => {
-    return makeAthleteCard(athlete)
+    console.log(athlete)
+     makeAthleteCard(athlete)
+     let modal = document.getElementById(`modal${athlete.id}`);
+     let instance = M.Modal.init(modal, {athlete});
+     instance.open()
   })
+}
+
+function makeAthleteCard(athlete) {
+  let athleteCard = document.createElement('div')
+  athleteCard.innerHTML = athleteCardHtml(athlete)
+  document.body.appendChild(athleteCard)
+  return null
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -78,19 +85,31 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 })
 
-function createNote(e) {
-  e.preventDefault()
-  let addNoteField = document.createElement('div')
-  addNoteField.innerHTML = `
-    <textarea id="new-comment" placeholder="note goes here"><textarea>
+function createComment(e) {
+  let athlete = e.target.dataset.athlete
+  let addCommentField = document.getElementById(`comments-${athlete.id}`)
+  addCommentField.innerHTML = generateCommentsForm(athlete)
+}
+
+function generateCommentsForm(athlete) {
+  return `
+    <form class="edit-comments-form" data-athlete=${athlete.id}>
+      <label>Name:</label>
+      <input type="textarea" name="name" value="${athlete.commments}">
+      <br/>
+      <input id=edit-athlete type="submit" value="Submit Comments">
+    </form>
   `
 }
 
-teamDiv.addEventListener("click", (e) => {
-  if (e.target.className == "athlete-name")
+document.addEventListener("click", (e) => {
+  console.log(e.target.className)
+  if (e.target.className === "modal-trigger") {
     getPlayerCard(e)
-    let noteField = document.getElementById("add-note")
-    noteField.addEventListener("click", createNote(e))
+  }
+  else if (e.target.className === "comments-") {
+    createComment(e)
+  }
 })
 
 let athleteCardHtml = ((athlete) => {
@@ -101,47 +120,113 @@ let athleteCardHtml = ((athlete) => {
                <p>Birthday: ${athlete.birthdate}</p>
                <p>${athlete.height}, ${athlete.weight} lbs</p>
                `
-  return `
-    <div class="card">
-      <div class="background">
-          <img class="background-img" src="" alt="">
-      </div>
-      <div class="content">
-        <div class="profile">
-            <img class="profile-img" src="${athlete.image_url}" alt="">
-        </div>
-        <div class="header">
-            <h2 class="name">${fullname}</h2>
-            <p class='location'>${hometownInfo}</p>
-        </div>
-        <div class="info">
-            <p class="description">${athlete.biography}</p>
-        </div>
-        <div class="labels">
-          <div class="label">
-              <p>Comments:</p>
-              <div class="comments">
-                <ul>
-                  <li>or two, whatever</li>
-                  <li>no, make it three</li>
-                </ul>
-                <p>
-                  <button id="add-note">Click to Add a Note</button>
-                </p>
-              </div>
-          </div>
-          <div class="label">
-              <p>General Info:</p>
-              <div class="generalinfo">${general}
-              </div>
-          </div>
-        </div>
-      </div>
+  let comments = (athlete.comments == null) ? "Click to add a comment!" : athlete.comments
 
+  return `
+    <!-- Modal Structure -->
+    <div id="modal${athlete.id}" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <div class="card">
+          <div class="background">
+            <img class="background-img" src="" alt="">
+          </div>
+          <div class="content">
+            <div class="profile">
+              <img class="profile-img" src="${athlete.image_url}" alt="">
+            </div>
+            <div class="header">
+              <h2 class="name">${fullname}</h2>
+              <p class='location'>${hometownInfo}</p>
+            </div>
+            <div class="labels">
+              <div class="label">
+                <p>Comments:</p>
+                <div class="comments" id="comments">
+                  <p id="comments-${athlete.id}" class="comments-" data-athlete="${athlete}">
+                    ${comments}
+                  </p>
+                </div>
+              </div>
+              <div class="label">
+                <p>General Info:</p>
+                <div class="generalinfo">${general}
+                </div>
+              </div>
+            </div>
+            <div class="info">
+                <p class="description">${athlete.biography} ivaivbibvbvoioiejifoewici.lksnclkdsnc
+                Hi my name i s wat my name is who my name is wicka wicka shteve shtady.
+
+                [oewkfoewfjewnernv
+                skdnlskenvklenvklfnrweklwklfj;ldlqkwdqwdwq
+               </p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">close</a>
+        </div>
+      </div>
     </div>
   `
 })
 
+
+
+
+
+
+
+
+// editCountry(body, countryId){
+//     return fetch(`${this.baseURL}/${countryId}`, {
+//       method: "PUT",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Accept: "application/json"
+//       },
+//       body: JSON.stringify(body)
+//     })
+//   }
+// }
+
+
+  // <div class="card">
+  //   <div class="background">
+  //       <img class="background-img" src="" alt="">
+  //   </div>
+  //   <div class="content">
+  //     <div class="profile">
+  //         <img class="profile-img" src="${athlete.image_url}" alt="">
+  //     </div>
+  //     <div class="header">
+  //         <h2 class="name">${fullname}</h2>
+  //         <p class='location'>${hometownInfo}</p>
+  //     </div>
+  //     <div class="info">
+  //         <p class="description">${athlete.biography}</p>
+  //     </div>
+  //     <div class="labels">
+  //       <div class="label">
+  //           <p>Comments:</p>
+  //           <div class="comments">
+  //             <ul>
+  //               <li>or two, whatever</li>
+  //               <li>no, make it three</li>
+  //             </ul>
+  //             <p>
+  //               <button id="add-note">Click to Add a Note</button>
+  //             </p>
+  //           </div>
+  //       </div>
+  //       <div class="label">
+  //           <p>General Info:</p>
+  //           <div class="generalinfo">${general}
+  //           </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // </div>
 
 //   team_id, :firstname, :lastname, :birthdate,
 //                  :number, :year, :height, :weight, :city, :state, :high_school,
