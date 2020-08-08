@@ -86,18 +86,39 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 function createComment(e) {
-  let athlete = e.target.dataset.athlete
-  let addCommentField = document.getElementById(`comments-${athlete.id}`)
-  addCommentField.innerHTML = generateCommentsForm(athlete)
+  let athleteId = parseInt(e.target.id.split("-")[1])
+  let addCommentField = document.getElementById(`comments-${athleteId}`)
+  addCommentField.innerHTML = generateCommentsForm(athleteId)
+  document.addEventListener("submit", () => {
+    event.preventDefault()
+    let newCommentText = document.getElementById("text-input").value
+    return fetch(`http://localhost:3000/athletes/${athleteId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        comments: newCommentText
+      })
+    }).then(function(response){
+      return response.json()
+    }).then(athlete => {
+      addCommentField.innerHTML = `
+        <p id="comments-${athlete.id}" class="comments-" data-athlete="${athlete}">
+          ${athlete.comments}
+        </p>
+      `
+    })
+  })
 }
 
-function generateCommentsForm(athlete) {
+function generateCommentsForm(athleteId) {
   return `
-    <form class="edit-comments-form" data-athlete=${athlete.id}>
-      <label>Name:</label>
-      <input type="textarea" name="name" value="${athlete.commments}">
+    <form class="edit-comments-form" data-athlete=${athleteId}>
+      <input type="textarea" id="text-input" name="name" value="${athleteId.commments}">
       <br/>
-      <input id=edit-athlete type="submit" value="Submit Comments">
+      <input id=edit-athlete type="submit" value="Update Comments">
     </form>
   `
 }
@@ -154,42 +175,21 @@ let athleteCardHtml = ((athlete) => {
               </div>
             </div>
             <div class="info">
-                <p class="description">${athlete.biography} ivaivbibvbvoioiejifoewici.lksnclkdsnc
-                Hi my name i s wat my name is who my name is wicka wicka shteve shtady.
+              <p class="description">${athlete.biography} ivaivbibvbvoioiejifoewici.lksnclkdsnc
+              Hi my name i s wat my name is who my name is wicka wicka shteve shtady.
 
-                [oewkfoewfjewnernv
-                skdnlskenvklenvklfnrweklwklfj;ldlqkwdqwdwq
-               </p>
+              skdnlskenvklenvklfnrweklwklfj;ldlqkwdqwdwqoefjlkenkdne
+              </p>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <a href="#!" class="modal-close waves-effect waves-green btn-flat">close</a>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">close</a>
       </div>
     </div>
   `
 })
-
-
-
-
-
-
-
-
-// editCountry(body, countryId){
-//     return fetch(`${this.baseURL}/${countryId}`, {
-//       method: "PUT",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Accept: "application/json"
-//       },
-//       body: JSON.stringify(body)
-//     })
-//   }
-// }
-
 
   // <div class="card">
   //   <div class="background">
