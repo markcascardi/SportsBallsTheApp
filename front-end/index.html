@@ -5,9 +5,8 @@
     <title>SportsBalls - TheApp</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./css/materialize.css"  media="screen,projection"/>
-
     <link rel="stylesheet" href="./css/style.css">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"/> -->
+    <link rel="stylesheet" href="./css/custom.css">
   </head>
   <body>
     <header>
@@ -24,14 +23,15 @@
         <select id="teamSelect">
           <option value="" disabled selected>Choose your option</option>
         </select>
-        <label>Select a Team</label>
       </div>
       <p>
         <div id="roster">
         </div>
       </p>
     </main>
+
     <script type="text/javascript" src="./src/materialize.js"></script>
+    <script src="./src/teamAdapter.js"></script>
     <script src="./src/index.js"></script>
   </body>
 </html>

@@ -2162,7 +2162,7 @@ html {
  * Remove the margin in all browsers (opinionated).
  */
 body {
-  margin: 0;
+  margin: 12px;
 }
 
 /**
@@ -5755,8 +5755,8 @@ body.keyboard-focused .dropdown-content li:focus {
   right: 0;
   background-color: #fafafa;
   padding: 0;
-  max-height: 70%;
-  max-width: 55%;
+  max-height: 90%;
+  max-width: 60%;
   margin: auto;
   overflow-y: auto;
   border-radius: 2px;
@@ -6136,7 +6136,7 @@ input[type=search]:not(.browser-default),
 textarea.materialize-textarea {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid #9e9e9e;
+  border-bottom: transparent;
   border-radius: 0;
   outline: none;
   height: 3rem;
@@ -6259,7 +6259,7 @@ input[type=tel]:not(.browser-default):focus.valid ~ label,
 input[type=number]:not(.browser-default):focus.valid ~ label,
 input[type=search]:not(.browser-default):focus.valid ~ label,
 textarea.materialize-textarea:focus.valid ~ label {
-  color: #4CAF50;
+  color: #4B9CD3;
 }
 
 input:not([type]):focus.invalid ~ label,
@@ -6320,9 +6320,9 @@ input.valid[type=search]:not(.browser-default),
 input.valid[type=search]:not(.browser-default):focus,
 textarea.materialize-textarea.valid,
 textarea.materialize-textarea.valid:focus, .select-wrapper.valid > input.select-dropdown {
-  border-bottom: 1px solid #4CAF50;
+  border-bottom: 0px solid ##4B9CD3;
   -webkit-box-shadow: 0 1px 0 0 #4CAF50;
-          box-shadow: 0 1px 0 0 #4CAF50;
+          box-shadow: 0 0px 0 0 #4CAF50;
 }
 
 input.invalid:not([type]), input.invalid:not([type]):focus,
@@ -6502,8 +6502,8 @@ textarea.materialize-textarea + label:after, .select-wrapper + label:after {
 
 .input-field {
   position: relative;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 
 .input-field.inline {
@@ -6514,7 +6514,7 @@ textarea.materialize-textarea + label:after, .select-wrapper + label:after {
 
 .input-field.inline input,
 .input-field.inline .select-dropdown {
-  margin-bottom: 1rem;
+  margin-bottom: 1px;
 }
 
 .input-field.col label {
@@ -7177,7 +7177,7 @@ select {
   outline: none;
   height: 3rem;
   line-height: 3rem;
-  width: 100%;
+  width: 30%;
   font-size: 16px;
   margin: 0 0 8px 0;
   padding: 0;

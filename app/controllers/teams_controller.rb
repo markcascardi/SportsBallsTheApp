@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   def index
-    teams = Team.where(id: 661)
+    teams = Team.all
     render json: TeamSerializer.new(teams).to_serialized_json
   end
 

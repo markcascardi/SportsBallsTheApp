@@ -1,0 +1,93 @@
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>SportsBalls - TheApp</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="./css/materialize.css"  media="screen,projection"/>
+
+    <!-- <link rel="stylesheet" href="./css/style.css"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"/> -->
+  </head>
+
+  <!-- <div id="modal${athlete.id}" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <div class="card">
+        <div class="background">
+          <img class="background-img" src="" alt="">
+        </div>
+        <div class="content">
+          <div class="profile">
+            <img class="profile-img" src="${athlete.image_url}" alt="">
+          </div>
+          <div class="header">
+            <h2 class="name">${fullname}</h2>
+            <p class='location'>${hometownInfo}</p>
+          </div>
+           -->
+       <div class="row">
+         <form class="col s12">
+           <div class="row">
+             <div class="col s6">
+               IG Handle:
+               <div class="input-field inline">
+                 <input id="ig_handle-${athlete.id}" type="text" class="validate" value=${athlete.ig_handle}>
+               </div>
+             </div>
+             <div class="col s6">
+               Birthday
+               <div class="input-field inline">
+                 <input id="birthdate-${athlete.id}" type="text" class="validate" value=${athlete.birthdate}>
+               </div>
+             </div>
+           </div>
+           <div class="row">
+             <div class="col s6">
+               Height:
+               <div class="input-field inline">
+                 <input id="height-${athlete.id}" type="text" class="validate" value=${athlete.height}>
+               </div>
+             </div>
+             <div class="col s6">
+               weight
+               <div class="input-field inline">
+                 <input id="weight-${athlete.id}" type="text" class="validate" value=${athlete.weight}>
+               </div>
+             </div>
+           </div>
+         </form>
+       </div>
+       <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              Notes:
+              <textarea id="textarea1" class="materialize-textarea" id="comments-${athlete.id}" data-athlete="${athlete}" value=${athlete.weight}>${athlete.comments}</textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+
+ `<p class="generalinfo-details" id="ig_handle-${athlete.id}">IG handle: @${athlete.ig_handle}</p>
+  <p class="generalinfo-details" id="birthdate-${athlete.id}">Birthday: ${athlete.birthdate}</p>
+  <p class="generalinfo-details" id="height-${athlete.id}">${athlete.height}</p>
+  <p class="generalinfo-details" id="weight-${athlete.id}">${athlete.weight} lbs</p>
+
+  <div class="row">
+    <div class="col s12">
+      <div class="labels">
+        <div class="label">
+          <p>Comments:</p>
+          <div class="comments" id="comments">
+            <p id="comments-${athlete.id}" class="comments-" data-athlete="${athlete}">
+              ${comments}
+            </p>
+          </div>
+        </div>
+        <div class="label">
+          <p>General Info:</p>
+          <div class="generalinfo" id="generalinfo-${athlete.id}">${general}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div
