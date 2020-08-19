@@ -3,6 +3,8 @@ const teamUrl = baseUrl+"/${team.id}"
 const teamDropDown = document.getElementById("teamSelect")
 const teamDiv = document.getElementById("roster")
 const teamAdapter = new TeamAdapter("http://localhost:3000/teams/")
+const searchInput = document.getElementById("search-athlete-button")
+let globalRoster = {}
 
 function getTeams () {
   teamAdapter.fetchTeams()
@@ -20,21 +22,29 @@ function getTeams () {
 function getRoster(teamSelected) {
   teamAdapter.fetchTeam(teamSelected)
   .then(roster => {
-    rosterList = ""
-    renderRoster(roster)
+    globalRoster = roster.athletes
+    renderRoster(roster.athletes)
 })
 
-function renderRoster(roster) {
-  roster.athletes.forEach(athlete => {
+searchInput.addEventListener("click", () => {
+  const searchInputText = document.getElementById("search")
+
+  let filteredRoster = globalRoster.filter(athlete => athlete.year === searchInputText.value)
+  renderRoster(filteredRoster)
+})
+
+function renderRoster(athletes) {
+  rosterList = ""
+  athletes.forEach(athlete => {
     rosterList += `
-        <tr id="${athlete.id}" class="athlete-details">
-          <td>${athlete.number}</td>
-          <td class="athlete-name">
-            <a data-athlete="${athlete.id}" class="modal-trigger" href="#modal${athlete.id}">${athlete.firstname} ${athlete.lastname}</a>
-          </td>
-          <td>${athlete.year}</td>
-          <td>${athlete.city}, ${athlete.state}</td>
-        </tr>
+      <tr id="${athlete.id}" class="athlete-details">
+        <td>${athlete.number}</td>
+        <td class="athlete-name">
+          <a data-athlete="${athlete.id}" class="modal-trigger" href="#modal${athlete.id}">${athlete.firstname} ${athlete.lastname}</a>
+        </td>
+        <td>${athlete.year}</td>
+        <td>${athlete.city}, ${athlete.state}</td>
+      </tr>
     `
   })
   teamDiv.innerHTML = `
@@ -56,12 +66,10 @@ function renderRoster(roster) {
 }
 
 function getAthleteCard(e) {
-  console.log(e.target.dataset.athlete)
   let athleteSelected = e.target.dataset.athlete
   fetch("http://localhost:3000/athletes/" + athleteSelected)
   .then(response => response.json())
   .then(athlete => {
-    console.log(athlete)
      makeAthleteCard(athlete)
      let modal = document.getElementById(`modal${athlete.id}`);
      let instance = M.Modal.init(modal, {athlete});
@@ -77,7 +85,6 @@ function makeAthleteCard(athlete) {
 }
 
 function updateAthlete(e) {
-  console.log(e.target[0].id.split("-")[1])
   let athleteId = parseInt(e.target[0].id.split("-")[1])
   let newIg_handle = document.getElementById(`ig_handle-${athleteId}`).value
   let newBirthdate = document.getElementById(`birthdate-${athleteId}`).value
@@ -107,6 +114,20 @@ function updateAthlete(e) {
   })
 }
 
+function updateGeneralInfo(e) {
+  let athleteId = parseInt(e.target.id.split("-")[1])
+  let addUpdateFields = Array.from(document.getElementsByClassName('generalinfo'))[0]
+  addUpdateFields.innerHTML = generateGeneralForm(athleteId)
+}
+
+function displayEditButton(e) {
+  let athleteId = parseInt(e.target.id.split("-")[1])
+  let buttonDiv = document.getElementById(`edit-athlete-button-div-${athleteId}`)
+  buttonDiv.innerHTML = `
+    <input class="waves-effect waves-blue btn-flat" id="edit-athlete-button" type="submit" value="Update Athlete Info">
+  `
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   getTeams()
   teamDropDown.addEventListener("change", (e) => {
@@ -115,30 +136,19 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 })
 
-document.addEventListener("submit", (event) => {
+document.addEventListener("submit", (e) => {
   event.preventDefault()
-  console.log(event.target)
-  updateAthlete(event)
+  if (e.target.id === "edit-athlete-button") {
+    updateAthlete(event)
+  }
 })
-
-
-function updateGeneralInfo(e) {
-  let athleteId = parseInt(e.target.id.split("-")[1])
-  let addUpdateFields = Array.from(document.getElementsByClassName('generalinfo'))[0]
-  addUpdateFields.innerHTML = generateGeneralForm(athleteId)
-}
 
 document.addEventListener("click", (e) => {
   if (e.target.className === "modal-trigger") {
     getAthleteCard(e)
   }
   else if (e.target.type === "text") {
-    console.log(e.target.id)
-    let athleteId = parseInt(e.target.id.split("-")[1])
-    let buttonDiv = document.getElementById(`edit-athlete-button-div-${athleteId}`)
-    buttonDiv.innerHTML = `
-      <input class="waves-effect waves-blue btn-flat" id="edit-athlete-button" type="submit" value="Update Athlete Info">
-    `
+    displayEditButton(e)
   }
 })
 
@@ -210,10 +220,7 @@ let athleteCardHtml = ((athlete) => {
           </div>
           <div class="info">
           Bio:
-            <p class="description">${athlete.biography} ivaivbibvbvoioiejifoewici.lksnclkdsnc
-            Hi my name i s wat my name is who my name is wicka wicka shteve shtady.
-
-            skdnlskenvklenvklfnrweklwklfj;ldlqkwdqwdwqoefjlkenkdne
+            <p class="description">${athlete.biography}
             </p>
           </div>
         </div>
